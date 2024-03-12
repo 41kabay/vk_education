@@ -1,0 +1,212 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl '\n'
+#define disturbed ios_base :: sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define pb push_back
+#define vi vector<int>
+#define all(v) v.begin(),v.end()
+const int N = 3*1e5 + 100;
+const long double pi = 3.1415926536 ; 
+int n, k;
+int a[N], b[N];
+int ans = 0;
+//Функция разворота
+void reverseArray(int arr[],int size)
+{
+	for (int i = 0; i < size/2; i++)
+	{
+		swap(arr[i],arr[size - i - 1]);
+	}
+}
+// Развернуть массив
+void solve1()
+{
+	cin >> n;
+	for(int i = 0;i <n; i++)
+	{
+		cin >> a[i];
+	}
+//	int ll = 0;
+//	int rr = n - ll - 1;
+//	while(ll < rr)
+//	{
+//		swap (a[ll],a[rr]);
+//		ll++;
+//		rr--;
+//	}
+//
+	reverseArray(a,n);
+		for(int i = 0;i < n; i++)
+	{
+		cout << a[i] << endl;
+	}
+}
+// Развернуть часть массива
+void reverseArray2(int a[],int left, int right)
+{
+	while(left < right)
+	{
+		swap(a[left], a[right]);
+		left++;
+		right--;
+	}
+}
+void solve2()
+{
+	int k;
+	cin >> n >> k;
+	for(int i = 0; i < n; i++)
+	{
+		cin >> a[i];
+	}
+//	int ll = 0;
+//	int rr = n - ll - 1;
+//	while(ll < rr)
+//	{
+//		swap (a[ll],a[rr]);
+//		ll++;
+//		rr--;
+//	}
+	reverseArray2(a, 0, n - 1);
+	reverseArray2(a, 0, k - 1);
+	reverseArray2(a, k, n - 1);
+	for(int i = 0;i < n; i++)
+	{
+		cout << a[i] << endl;
+	}
+}
+//Слияние двух отсортированных массивов
+void solve3()
+{
+	cin >> n;
+	cin >> k;
+	for(int i = 0; i < n; i++)
+	{
+		cin >> a[i];
+	}
+	for(int i = 0; i < k; i++)
+	{
+		cin >> b[i];
+	}
+	int mer[n + k];
+	int r = 0, l = 0;
+	while(r < n && l < k)
+	{
+		if(a[r] < b[l])
+		{
+			mer[r + l] = a[r];
+			r++;
+		}
+		else
+		{
+			mer[r + l] = b[l];
+			l++;
+		}
+	}
+	mer[n + k - 1] = max(a[n - 1], b[k - 1]);
+	for(int i = 0; i < (n + k); i++)
+	{
+		cout << mer[i]<< " ";
+	}
+}
+
+void solve4()
+{
+	cin >> n;
+	cin >> k;
+	for(int i = 0; i < n;i++)
+	{
+		cin >> a[i];
+	}
+	for(int i = n; i < n + k; i++)
+	{
+		a[i] = 0;
+	}
+	for(int i = 0; i < k;i++)
+	{
+		cin >> b[i];
+	}
+	int p1 = n - k - 1;
+	int p3 = n + k - 1; 
+	int p2 = n - 1;  
+	while(p2 >= 0)
+	{
+		if (p1 >= 0 && a[p1] > b[p2])
+		{
+			a[p3] = a[p1];
+			p1--;
+		}
+		else
+		{
+			a[p3] = b[p2];
+			p2--;
+		}
+		p3--;
+	}
+	for(int i = 0; i < n + k;i++)
+	{
+		cout << a[i] << endl;
+	}
+}
+//Передвинуть четные числа вперед
+void solve5()
+{
+	cin >> n;
+	for(int i = 0; i < n;i++)
+	{
+		cin >> a[i];
+	}
+	int p1 = 0;
+	int p2 = 0;
+	for(int i = 0; i < n; i++)
+	{
+		if(a[i]%2==0)
+		{
+			swap(a[p1],a[p2]);
+			p2++;
+			p1++;
+		}
+		else 
+		{
+			p1++;
+		}
+	}
+	for(int i = 0; i < n;i++)
+	{
+		cout << a[i] << endl;
+	}
+}
+//Передвинуть нули в конец
+void solve6()
+{
+	cin >> n;
+	for(int i = 0; i < n; i++)
+	{
+		cin >> a[i];
+	}
+	int left = 0; 
+    int right = 0;
+    while (right < n) {
+        if (a[right] != 0) {
+            a[left++] = a[right];
+        }
+        right++;
+    }
+    while (left < n) {
+        a[left++] = 0;
+    }
+	for(int i = 0; i < n; i++)
+	{
+		cout << a[i] << endl;
+	}
+}
+signed main()
+{
+	disturbed;
+	int tek = 1;
+	while(tek--)
+	{
+		solve6();
+	}
+	return 0;
+}
